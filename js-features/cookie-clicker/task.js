@@ -1,31 +1,28 @@
-let startCount = function() {
-    
-    let cookies = document.getElementById('cookie');
-    let counter = Number(document.getElementById('clicker__counter').textContent);
-    let speed = document.getElementById('clicker__speed');
-    let lastClick = Date.now();
-    let speedClick = 0;
-    
+let clickCount = 0; 
+let lastClickTime = Date.now(); 
+const cookie = document.getElementById('cookie');
+const counter = document.getElementById('clicker__counter');
 
-    cookies.onclick = function() {
-        let now = Date.now();
-        
-        speedClick = 1 / ((now - lastClick) / 1000);
-        speed.textContent = speedClick.toFixed(2);
-        lastClick = now;
+const clickSpeedIndicator = document.createElement('div');
+clickSpeedIndicator.classList.add('click-speed');
+const clickerStatus = document.querySelector('.clicker__status');
+clickerStatus.appendChild(clickSpeedIndicator);
 
-        counter += 1;
+function updateClicker() {
+    const currentTime = Date.now();
+    const timeDiff = (currentTime - lastClickTime) / 1000;
+    lastClickTime = currentTime;
 
-        if (counter % 2 === 0) {
-            cookies.width = 200;
+    clickCount++;
+    counter.textContent = clickCount;
 
-        } else {
-            cookies.width = 180;
-        }
-
-        document.getElementById('clicker__counter').textContent = counter;
+    if (timeDiff > 0) {
+        const clickSpeed = (1 / timeDiff).toFixed(2);
+        clickSpeedIndicator.textContent = `Скорость клика: ${clickSpeed} кликов в секунду`;
     }
+
+    const newSize = clickCount % 2 === 0 ? 180 : 220;
+    cookie.style.width = `${newSize}px`;
 }
 
-
-startCount();
+cookie.onclick = updateClicker;
