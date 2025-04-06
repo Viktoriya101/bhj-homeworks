@@ -1,4 +1,4 @@
-let clickCount = 0; 
+let clickCount = 0;
 let lastClickTime = Date.now(); 
 const cookie = document.getElementById('cookie');
 const counter = document.getElementById('clicker__counter');
@@ -21,8 +21,8 @@ function updateClicker() {
         clickSpeedIndicator.textContent = `Скорость клика: ${clickSpeed} кликов в секунду`;
     }
 
-    const newSize = clickCount % 2 === 0 ? 180 : 220;
-    cookie.style.width = `${newSize}px`;
+    const size = clickCount % 2 === 0 ? 180 : 220;
+    cookie.style.width = `${size}px`;
 }
 
 cookie.onclick = updateClicker;
