@@ -4,6 +4,9 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timerElement = document.querySelector('.timer__countdown');
+    this.timer = null;
+    this.timeLeft = null;
 
     this.reset();
 
@@ -17,6 +20,7 @@ class Game {
   }
 
   registerEvents() {
+    
     /*
       TODO:
       Написать обработчик события, который откликается
@@ -25,6 +29,18 @@ class Game {
       При неправильном вводе символа - this.fail();
       DOM-элемент текущего символа находится в свойстве this.currentSymbol.
      */
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Shift' || event.altKey) {
+      return;
+    }
+      const symbol = this.currentSymbol.textContent.toLowerCase();
+      const key = event.key.toLowerCase();
+      if (symbol === key) {
+        this.success();
+      } else {
+        this.fail();
+      }
+    });
   }
 
   success() {
@@ -54,8 +70,24 @@ class Game {
 
   setNewWord() {
     const word = this.getWord();
-
+    clearInterval(this.timer);
     this.renderWord(word);
+    this.setTimer();
+  }
+
+  setTimer() {
+    this.timeLeft = this.wordElement.textContent.length;
+    this.timerElement.textContent = this.timeLeft;
+
+    this.timer = setInterval(() => {
+        this.timeLeft--;
+        this.timerElement.textContent = this.timeLeft;
+
+        if (this.timeLeft <= 0) {
+            clearInterval(this.timer);
+            game.fail();
+        }
+    }, 1000);
   }
 
   getWord() {
@@ -70,7 +102,9 @@ class Game {
         'popcorn',
         'cinema',
         'love',
-        'javascript'
+        'javascript',
+        'нетология',
+        'земля'
       ],
       index = Math.floor(Math.random() * words.length);
 
@@ -90,5 +124,6 @@ class Game {
   }
 }
 
-new Game(document.getElementById('game'))
 
+
+let game = new Game(document.getElementById('game'));
