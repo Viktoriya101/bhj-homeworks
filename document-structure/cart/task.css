@@ -89,3 +89,17 @@ body {
 .product-shadow {
   position: absolute;
 }
+
+.product__remove {
+  background: red;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  
+}
+
+.product__remove:hover {
+  background: gray;
+}
