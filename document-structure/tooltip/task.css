@@ -12,12 +12,20 @@
 }
 
 .tooltip {
-  position: fixed;
+  position: absolute;
   display: none;
   background: black;
   padding: 5px;
   border-radius: 5px;
   color: #fff;
+}
+
+.tooltip[data-position="bottom"] {
+    bottom: -10px;
+}
+
+.tooltip[data-position="top"] {
+  top: 0px;
 }
 
 .tooltip_active {

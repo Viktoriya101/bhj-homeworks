@@ -5,6 +5,10 @@ const list = document.querySelector('.tasks__list');
 
 form.addEventListener('submit', event => {
     event.preventDefault();
+    if (input.value.trim() === '') {
+        input.value = '';
+        return; // Не добавляем задачу, если значение пустое
+    }
     // новая задача
     let newList = `
     <div class="task">

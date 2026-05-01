@@ -19,28 +19,13 @@ hasTooltip.forEach((element) => {
     tooltip.textContent = tooltipText;
     tooltip.classList.toggle("tooltip_active");
 
-    // data-position
-    tooltip.setAttribute('data-position', 'bottom');
-
-    // Позиционирование tooltip
-    const position = tooltip.getAttribute('data-position');
-    const targetElem = element.getBoundingClientRect();
-    
-    if (position === 'top') {
-      tooltip.style.left = `${targetElem.left}px`;
-      tooltip.style.top = `${targetElem.top - tooltip.offsetHeight}px`;
-    } else if (position === 'left') {
-      tooltip.style.left = `${targetElem.left - tooltip.offsetWidth}px`;
-      tooltip.style.top = `${targetElem.top}px`;
-    } else if (position === 'right') {
-      tooltip.style.left = `${targetElem.right}px`;
-      tooltip.style.top = `${targetElem.top}px`;
-    } else if (position === 'bottom') {
-      tooltip.style.left = `${targetElem.left}px`;
-      tooltip.style.top = `${targetElem.bottom}px`;
-    }
+    const { bottom, left, width } = element.getBoundingClientRect();
+    tooltip.style.top = `${bottom}px`;
+    tooltip.style.left = `${left}px`;
 
     // Обновляем активный tooltip, если его нет — null
     activeTooltip = tooltip.classList.contains("tooltip_active") ? tooltip : null;
   });
 });
+
+

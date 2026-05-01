@@ -80,18 +80,21 @@ class CreateCart {
     buttonRemove.className = "product__remove";
     buttonRemove.textContent = "Удалить";
 
+    // Добавлен слушатель событий для кнопки удаления
     buttonRemove.addEventListener("click", () => this.removeOneProduct(id));
 
     cartProduct.append(img, countDiv, buttonRemove);
     return cartProduct;
   }
 
+  // Метод для уменьшения количества одного товара
   removeOneProduct(id) {
     if (this.items[id]) {
       this.items[id].count--;
       const countElement = this.items[id].element.querySelector(".cart__product-count");
       countElement.textContent = this.items[id].count;
 
+      // Если количество стало 0, удаляем весь товар из корзины
       if (this.items[id].count === 0) {
         this.items[id].element.remove();
         delete this.items[id];
@@ -104,6 +107,8 @@ class CreateCart {
     }
   }
 
+  // Метод для полного удаления товара из корзины (например, если кнопка "Удалить" кликается отдельно)
+  // Этот метод уже существовал и работает корректно для полного удаления
   removeProduct(id) {
     if (this.items[id]) {
       this.items[id].element.remove();
@@ -130,6 +135,10 @@ class CreateCart {
     const savedData = JSON.parse(localStorage.getItem("cart")) || {};
     for (const id in savedData) {
       const { count, imageSrc } = savedData[id];
+      // Здесь нужно учесть, что addProduct добавляет товар.
+      // При загрузке из localStorage мы можем прямо установить количество.
+      // Или модифицировать addProduct для обработки загрузки.
+      // Для простоты, создадим элемент напрямую, если он еще не добавлен.
       if (!this.items[id]) {
           const cartProduct = this.createCartProduct(id, imageSrc, count);
           this.cartContainer.append(cartProduct);
